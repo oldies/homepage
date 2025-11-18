@@ -42,7 +42,7 @@ export default async function handler(req, res) {
   // store userinfo in session
   session.userInfo = {
     sub: userinfo.sub,
-    name: userinfo.given_name || "",
+    name: userinfo.name || "",
     email: userinfo.email | "",
     email_verified: userinfo.email_verified || false,
   };

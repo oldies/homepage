@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 /* -------------------------------------------------
    1️⃣  Host‑validation (your existing code)
    ------------------------------------------------- */
-export function middleware(req) {
+export async function middleware(req) {
   // ---- Host validation -------------------------------------------------
   const host = req.headers.get("host");
   const port = process.env.PORT || 3000;
@@ -46,7 +46,8 @@ export function middleware(req) {
   if (needsAuth) {
     // Load the session from the encrypted cookie
     // `cookies()` works in edge runtime; it reads the request’s cookies
-    const sessionPromise = getIronSession(cookies(), sessionOptions);
+    const cookieList = await cookies();
+    const sessionPromise = getIronSession(cookieList, sessionOptions);
     // Because `middleware` can be async, we await the promise
     return (async () => {
       const session = await sessionPromise;
