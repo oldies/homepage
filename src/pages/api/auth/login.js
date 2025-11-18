@@ -1,0 +1,58 @@
+// pages/api/auth/login.js
+import * as client from "openid-client";
+import { clientConfig, getClientConfig, getSession } from "../../../lib/auth";
+
+/**
+ * @param {import("next").NextApiRequest} req
+ * @param {import("next").NextApiResponse} res
+ */
+export default async function handler(req, res) {
+  const session = await getSession(req, res);
+  let code_verifier = client.randomPKCECodeVerifier();
+  let code_challenge = await client.calculatePKCECodeChallenge(code_verifier);
+  const openIdClientConfig = await getClientConfig();
+
+  let parameters = {
+    redirect_uri: clientConfig.redirect_uri,
+    scope: clientConfig.scope || "",
+    code_challenge,
+    code_challenge_method: clientConfig.code_challenge_method,
+  };
+
+  let state = "";
+
+  if (!openIdClientConfig.serverMetadata().supportsPKCE()) {
+    state = client.randomState();
+    parameters.state = state;
+  }
+  let redirectTo = client.buildAuthorizationUrl(openIdClientConfig, parameters);
+  session.code_verifier = code_verifier;
+  session.state = state;
+  await session.save();
+  return res.redirect(redirectTo.href);
+}
+
+/*import { getClient } from "../../../lib/oidc";
+
+export default async function withSession(req, res) {
+  const client = await getClient();
+
+  const state = Buffer.from(Math.random().toString()).toString("base64");
+  const nonce = Buffer.from(Math.random().toString()).toString("base64");
+
+  // Store state & nonce in the encrypted session
+  req.session.state = state;
+  req.session.nonce = nonce;
+  await req.session.save();
+
+  const authUrl = client.
+    .authorizationUrl({
+    scope: "openid profile email",
+    response_mode: "query",
+    state,
+    nonce,
+  });
+
+  res.redirect(authUrl);
+}
+*/
