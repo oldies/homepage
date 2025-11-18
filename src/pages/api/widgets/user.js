@@ -5,8 +5,7 @@ export default async function handler(req, res) {
   // Grab the current session (replace with your own logic)
   const session = await getSession(req, res);
 
-  if (session) {
-    //?.user) {
+  if (session?.userInfo) {
     res.status(200).json({
       user: {
         name: session.userInfo.name,

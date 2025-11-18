@@ -79,7 +79,9 @@ export default function UserWidget({ options }) {
         additionalClassNames="information-widget-user"
       >
         <PrimaryText>{name}</PrimaryText>
-        {avatarUrl && <Avatar url={avatarUrl} name={name} />}
+        {(avatarUrl && <Avatar url={avatarUrl} name={name} />) || (
+          <WidgetIcon icon={MdPerson} size="m" />
+        )}
       </Container>
     );
   }

@@ -33,11 +33,7 @@ export async function middleware(req) {
 
   // ---- Iron‑session auth check -----------------------------------------
   // Paths that require a logged‑in user. Adjust to your app’s structure.
-  const protectedPrefixes = [
-    "/protected-middleware",
-    "/dashboard",
-    "/api/bookmarks", // example API route
-  ];
+  const protectedPrefixes = ["/protected-middleware", "/dashboard"];
 
   const needsAuth = protectedPrefixes.some((p) =>
     req.nextUrl.pathname.startsWith(p),

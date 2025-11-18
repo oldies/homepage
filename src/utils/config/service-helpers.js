@@ -3,8 +3,13 @@ import path from "path";
 
 import Docker from "dockerode";
 import yaml from "js-yaml";
+import jsep from "jsep";
 
-import checkAndCopyConfig, { CONF_DIR, getSettings, substituteEnvironmentVars } from "utils/config/config";
+import checkAndCopyConfig, {
+  CONF_DIR,
+  getSettings,
+  substituteEnvironmentVars,
+} from "utils/config/config";
 import getDockerArguments from "utils/config/docker";
 import { getKubeConfig } from "utils/config/kubernetes";
 import * as shvl from "utils/config/shvl";
@@ -12,6 +17,80 @@ import kubernetes from "utils/kubernetes/export";
 import createLogger from "utils/logger";
 
 const logger = createLogger("service-helpers");
+
+/* -------------------------------------------------
+   Safe evaluator
+   ------------------------------------------------- */
+function evaluate(node, claims) {
+  switch (node.type) {
+    case "BinaryExpression": {
+      const left = evaluate(node.left, claims);
+      const right = evaluate(node.right, claims);
+
+      switch (node.operator) {
+        case "==":
+          // undefined === undefined should be true, otherwise false
+          return left === right;
+        case "!=":
+          return left !== right;
+        case "&&":
+          return Boolean(left) && Boolean(right);
+        case "||":
+          return Boolean(left) || Boolean(right);
+        case "includes":
+          return Array.isArray(left) && left.includes(right);
+        case "matches":
+          return typeof left === "string" && new RegExp(right).test(left);
+        default:
+          throw new Error(`Unsupported operator ${node.operator}`);
+      }
+    }
+
+    case "LogicalExpression":
+      // jsep sometimes uses this for && ||
+      return evaluate(node.left, claims) && evaluate(node.right, claims);
+
+    case "UnaryExpression":
+      return node.operator === "!"
+        ? !evaluate(node.argument, claims)
+        : evaluate(node.argument, claims);
+
+    case "Identifier": {
+      // support `claim.exists` syntax
+      if (node.name.endsWith(".exists")) {
+        const key = node.name.slice(0, -7);
+        return Object.prototype.hasOwnProperty.call(claims, key);
+      }
+      return claims?.[node.name];
+    }
+
+    case "MemberExpression": {
+      // Handles nested paths like user.role or profile.groups[0]
+      const object = evaluate(node.object, claims);
+      if (object === undefined || object === null) return undefined;
+
+      const property = node.computed
+        ? evaluate(node.property, claims) // e.g. [0] or [expr]
+        : node.property.name; // e.g. .role
+
+      return object?.[property];
+    }
+
+    case "Literal":
+      return node.value;
+
+    case "ArrayExpression":
+      return node.elements.map((el) => evaluate(el, claims));
+
+    default:
+      return undefined;
+  }
+}
+
+function compileFilter(expr) {
+  const ast = jsep(expr);
+  return (claims) => evaluate(ast, claims);
+}
 
 function parseServicesToGroups(services) {
   if (!services) {
@@ -26,16 +105,30 @@ function parseServicesToGroups(services) {
     serviceGroup[name].forEach((entries) => {
       const entryName = Object.keys(entries)[0];
       if (!entries[entryName]) {
-        logger.warn(`Error parsing service "${entryName}" from config. Ensure required fields are present.`);
+        logger.warn(
+          `Error parsing service "${entryName}" from config. Ensure required fields are present.`,
+        );
         return;
       }
       if (Array.isArray(entries[entryName])) {
-        groups = groups.concat(parseServicesToGroups([{ [entryName]: entries[entryName] }]));
+        groups = groups.concat(
+          parseServicesToGroups([{ [entryName]: entries[entryName] }]),
+        );
       } else {
+        let visible_filter = {};
+        if (entries[entryName]["filter"]) {
+          visible_filter = {
+            visible: compileFilter(entries[entryName]["filter"]),
+          };
+          delete entries[entryName]["filter"];
+        }
+
         serviceGroupServices.push({
           name: entryName,
+          ...visible_filter,
           ...entries[entryName],
-          weight: entries[entryName].weight || serviceGroupServices.length * 100, // default weight
+          weight:
+            entries[entryName].weight || serviceGroupServices.length * 100, // default weight
           type: "service",
         });
       }
@@ -225,12 +318,16 @@ export async function servicesFromKubernetes() {
   }
 }
 
-export function cleanServiceGroups(groups) {
+export function cleanServiceGroups(groups, userdata) {
   return groups.map((serviceGroup) => ({
     name: serviceGroup.name,
     services: serviceGroup.services.map((service) => {
+      if (service.visible && !service.visible(userdata)) {
+        return null;
+      }
       const cleanedService = { ...service };
-      if (cleanedService.showStats !== undefined) cleanedService.showStats = JSON.parse(cleanedService.showStats);
+      if (cleanedService.showStats !== undefined)
+        cleanedService.showStats = JSON.parse(cleanedService.showStats);
       if (typeof service.weight === "string") {
         const weight = parseInt(service.weight, 10);
         if (Number.isNaN(weight)) {
@@ -241,6 +338,9 @@ export function cleanServiceGroups(groups) {
       }
       if (typeof cleanedService.weight !== "number") {
         cleanedService.weight = 0;
+      }
+      if (cleanedService.visible) {
+        delete cleanedService.visible;
       }
       if (!cleanedService.widgets) cleanedService.widgets = [];
       if (cleanedService.widget) {
