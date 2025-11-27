@@ -814,13 +814,14 @@ export default async function getServiceWidget(
   group,
   service,
   index,
-  userdata,
+  userdata = false,
 ) {
   const serviceItem = await getServiceItem(group, service);
 
   if (
     serviceItem &&
-    (!serviceItem.visible ||
+    (userdata == false ||
+      !serviceItem.visible ||
       (serviceItem.visible && serviceItem.visible(userdata)))
   ) {
     const { widget, widgets } = serviceItem;

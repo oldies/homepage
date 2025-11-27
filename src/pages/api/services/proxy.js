@@ -12,6 +12,7 @@ export default async function handler(req, res) {
   const session = await getSession(req, res);
 
   if (!session.userInfo) session.userInfo = {};
+  const userinfo = JSON.parse(JSON.stringify(session.userInfo));
 
   try {
     const { service, group, index } = req.query;
@@ -19,7 +20,7 @@ export default async function handler(req, res) {
       group,
       service,
       index,
-      session.userInfo,
+      userinfo,
     );
     let type = serviceWidget?.type;
 
