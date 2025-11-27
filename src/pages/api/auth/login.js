@@ -35,27 +35,3 @@ export default async function handler(req, res) {
   return res.redirect(redirectTo.href);
 }
 
-/*import { getClient } from "../../../lib/oidc";
-
-export default async function withSession(req, res) {
-  const client = await getClient();
-
-  const state = Buffer.from(Math.random().toString()).toString("base64");
-  const nonce = Buffer.from(Math.random().toString()).toString("base64");
-
-  // Store state & nonce in the encrypted session
-  req.session.state = state;
-  req.session.nonce = nonce;
-  await req.session.save();
-
-  const authUrl = client.
-    .authorizationUrl({
-    scope: "openid profile email",
-    response_mode: "query",
-    state,
-    nonce,
-  });
-
-  res.redirect(authUrl);
-}
-*/

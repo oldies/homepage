@@ -23,11 +23,3 @@ export default async function handler(req, res) {
   await session.save();
   return res.redirect(endSessionUrl.href);
 }
-/*import { withSession } from "../../../lib/session";
-
-export default withSession(async (req, res) => {
-  // Destroy the session data
-  req.session.destroy();
-  res.redirect("/");
-});
-*/
