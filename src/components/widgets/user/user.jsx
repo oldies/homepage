@@ -2,6 +2,7 @@
 import { useTranslation } from "next-i18next";
 import { useCallback } from "react";
 import useSWR from "swr";
+import { MdLogin, MdPerson } from "react-icons/md";
 
 import Container from "../widget/container";
 import ContainerButton from "../widget/container_button";
@@ -10,7 +11,7 @@ import PrimaryText from "../widget/primary_text";
 import SecondaryText from "../widget/secondary_text";
 import WidgetIcon from "../widget/widget_icon";
 
-import { MdLogin, MdPerson } from "react-icons/md";
+
 
 /* -------------------------------------------------
    Helper sub‑components

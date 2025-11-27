@@ -1,5 +1,6 @@
-import { servicesResponse } from "utils/config/api-response";
 import { getSession } from "../../../lib/auth";
+
+import { servicesResponse } from "utils/config/api-response";
 
 export default async function handler(req, res) {
   const session = await getSession(req, res);

@@ -1,8 +1,9 @@
 // middleware.js
-import { getIronSession } from "iron-session";
-import { sessionOptions } from "lib/auth";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { getIronSession } from "iron-session";
+
+import { sessionOptions } from "lib/auth";
 
 /* -------------------------------------------------
    1️⃣  Host‑validation (your existing code)

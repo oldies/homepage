@@ -1,10 +1,12 @@
+import { getSession } from "../../../lib/auth";
+
 import getServiceWidget from "utils/config/service-helpers";
 import createLogger from "utils/logger";
 import { formatApiCall } from "utils/proxy/api-helpers";
 import genericProxyHandler from "utils/proxy/handlers/generic";
 import calendarProxyHandler from "widgets/calendar/proxy";
 import widgets from "widgets/widgets";
-import { getSession } from "../../../lib/auth";
+
 
 const logger = createLogger("servicesProxy");
 

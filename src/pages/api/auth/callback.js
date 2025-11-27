@@ -1,5 +1,6 @@
 // pages/api/auth/callback.js
 import * as client from "openid-client";
+
 import { clientConfig, getClientConfig, getSession } from "../../../lib/auth";
 
 /**
