@@ -97,9 +97,9 @@ export async function getClientConfig() {
     new URL(clientConfig.url),
     clientConfig.clientId,
     clientConfig.clientSecret,
-    client.ClientAuth | undefined,
+    /*client.ClientAuth | undefined,
     {
       execute: [client.allowInsecureRequests],
-    },
+      },*/
   );
 }

@@ -183,11 +183,10 @@ export async function servicesResponse(userdata) {
   let configuredServices;
   let initialSettings;
 
+  if (!userdata) userdata = {};
+
   try {
-    discoveredDockerServices = cleanServiceGroups(
-      await servicesFromDocker(),
-      userdata,
-    );
+    discoveredDockerServices = cleanServiceGroups(await servicesFromDocker());
     if (discoveredDockerServices?.length === 0) {
       console.debug("No containers were found with homepage labels.");
     }
@@ -212,7 +211,10 @@ export async function servicesResponse(userdata) {
   }
 
   try {
-    configuredServices = cleanServiceGroups(await servicesFromConfig());
+    configuredServices = cleanServiceGroups(
+      await servicesFromConfig(),
+      JSON.parse(JSON.stringify(userdata)),
+    );
   } catch (e) {
     console.error("Failed to load services.yaml, please check for errors");
     if (e) console.error(e.toString());

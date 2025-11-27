@@ -4,18 +4,29 @@ import { formatApiCall } from "utils/proxy/api-helpers";
 import genericProxyHandler from "utils/proxy/handlers/generic";
 import calendarProxyHandler from "widgets/calendar/proxy";
 import widgets from "widgets/widgets";
+import { getSession } from "../../../lib/auth";
 
 const logger = createLogger("servicesProxy");
 
 export default async function handler(req, res) {
+  const session = await getSession(req, res);
+
+  if (!session.userInfo) session.userInfo = {};
+
   try {
     const { service, group, index } = req.query;
-    const serviceWidget = await getServiceWidget(group, service, index);
+    const serviceWidget = await getServiceWidget(
+      group,
+      service,
+      index,
+      session.userInfo,
+    );
     let type = serviceWidget?.type;
 
     // exceptions
     if (type === "calendar") type = "ical";
-    else if (service === "unifi_console" && group === "unifi_console") type = "unifi_console";
+    else if (service === "unifi_console" && group === "unifi_console")
+      type = "unifi_console";
 
     const widget = widgets[type];
 

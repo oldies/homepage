@@ -4,6 +4,7 @@ import path from "path";
 import Docker from "dockerode";
 import yaml from "js-yaml";
 import jsep from "jsep";
+jsep.addBinaryOp("includes", 10);
 
 import checkAndCopyConfig, {
   CONF_DIR,
@@ -809,9 +810,19 @@ export async function getServiceItem(group, service) {
   return false;
 }
 
-export default async function getServiceWidget(group, service, index) {
+export default async function getServiceWidget(
+  group,
+  service,
+  index,
+  userdata,
+) {
   const serviceItem = await getServiceItem(group, service);
-  if (serviceItem) {
+
+  if (
+    serviceItem &&
+    (!serviceItem.visible ||
+      (serviceItem.visible && serviceItem.visible(userdata)))
+  ) {
     const { widget, widgets } = serviceItem;
     return index > -1 && widgets ? widgets[index] : widget;
   }

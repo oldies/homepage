@@ -1,5 +1,12 @@
 import { servicesResponse } from "utils/config/api-response";
+import { getSession } from "../../../lib/auth";
 
 export default async function handler(req, res) {
-  res.send(await servicesResponse());
+  const session = await getSession(req, res);
+
+  if (!session.userInfo) session.userInfo = {};
+
+  res.send(
+    await servicesResponse(JSON.parse(JSON.stringify(session.userInfo))),
+  );
 }

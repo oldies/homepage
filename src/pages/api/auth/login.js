@@ -12,19 +12,21 @@ export default async function handler(req, res) {
   let code_challenge = await client.calculatePKCECodeChallenge(code_verifier);
   const openIdClientConfig = await getClientConfig();
 
-  let parameters = {
+  const parameters = {
     redirect_uri: clientConfig.redirect_uri,
     scope: clientConfig.scope || "",
     code_challenge,
     code_challenge_method: clientConfig.code_challenge_method,
   };
 
-  let state = "";
+  const state = client.randomState();
+  parameters.state = state;
 
   if (!openIdClientConfig.serverMetadata().supportsPKCE()) {
-    state = client.randomState();
-    parameters.state = state;
+    const nonce = client.randomNonce();
+    parameters.nonce = nonce;
   }
+
   let redirectTo = client.buildAuthorizationUrl(openIdClientConfig, parameters);
   session.code_verifier = code_verifier;
   session.state = state;

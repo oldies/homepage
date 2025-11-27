@@ -16,15 +16,17 @@ export default async function handler(req, res) {
     headerList["x-forwarded-host"] || headerList["host"] || "localhost";
   const protocol = headerList["x-forwarded-proto"] || "https";
   const currentUrl = new URL(`${protocol}://${host}${req.url}`);
-  //${req.nextUrl.search}
+
   const tokenSet = await client.authorizationCodeGrant(
     openIdClientConfig,
     currentUrl,
     {
       pkceCodeVerifier: session.code_verifier,
-      //expectedState: session.state | "",
+      expectedState: session.state,
+      idTokenExpected: true,
     },
   );
+
   const { access_token } = tokenSet;
   session.isLoggedIn = true;
   session.access_token = access_token;
@@ -45,6 +47,7 @@ export default async function handler(req, res) {
     name: userinfo.name || "",
     email: userinfo.email | "",
     email_verified: userinfo.email_verified || false,
+    groups: userinfo.groups || [],
   };
 
   await session.save();
