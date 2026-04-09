@@ -18,9 +18,9 @@ export default async function handler(req, res) {
   const currentUrl = new URL(`${protocol}://${host}${req.url}`);
 
   const tokenSet = await client.authorizationCodeGrant(openIdClientConfig, currentUrl, {
-      pkceCodeVerifier: session.code_verifier,
-      expectedState: session.state,
-      idTokenExpected: true,
+    pkceCodeVerifier: session.code_verifier,
+    expectedState: session.state,
+    idTokenExpected: true,
   });
 
   const { access_token } = tokenSet;

@@ -10,6 +10,19 @@ vi.mock("utils/config/api-response", () => ({
   servicesResponse,
 }));
 
+vi.mock("iron-session", async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    getIronSession: vi.fn().mockResolvedValue({
+      user: { id: 1, name: "Test User" },
+      isLoggedIn: true,
+      save: vi.fn(),
+      destroy: vi.fn(),
+    }),
+  };
+});
+
 import handler from "pages/api/services/index";
 
 describe("pages/api/services/index", () => {
