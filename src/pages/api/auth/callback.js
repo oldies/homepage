@@ -13,20 +13,15 @@ export default async function handler(req, res) {
 
   const headerList = req.headers;
 
-  const host =
-    headerList["x-forwarded-host"] || headerList["host"] || "localhost";
+  const host = headerList["x-forwarded-host"] || headerList["host"] || "localhost";
   const protocol = headerList["x-forwarded-proto"] || "https";
   const currentUrl = new URL(`${protocol}://${host}${req.url}`);
 
-  const tokenSet = await client.authorizationCodeGrant(
-    openIdClientConfig,
-    currentUrl,
-    {
+  const tokenSet = await client.authorizationCodeGrant(openIdClientConfig, currentUrl, {
       pkceCodeVerifier: session.code_verifier,
       expectedState: session.state,
       idTokenExpected: true,
-    },
-  );
+  });
 
   const { access_token } = tokenSet;
   session.isLoggedIn = true;
@@ -36,11 +31,7 @@ export default async function handler(req, res) {
   const { sub } = claims;
 
   // call userinfo endpoint to get user info
-  const userinfo = await client.fetchUserInfo(
-    openIdClientConfig,
-    access_token,
-    client.skipSubjectCheck,
-  );
+  const userinfo = await client.fetchUserInfo(openIdClientConfig, access_token, client.skipSubjectCheck);
 
   // store userinfo in session
   session.userInfo = {
@@ -54,4 +45,3 @@ export default async function handler(req, res) {
   await session.save();
   return res.redirect(clientConfig.post_login_route);
 }
-

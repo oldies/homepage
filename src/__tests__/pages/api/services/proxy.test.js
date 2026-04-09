@@ -62,6 +62,19 @@ vi.mock("widgets/widgets", () => ({
   },
 }));
 
+vi.mock('iron-session', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    getIronSession: vi.fn().mockResolvedValue({
+      user: { id: 1, name: 'Test User' },
+      isLoggedIn: true,
+      save: vi.fn(),
+      destroy: vi.fn(),
+    }),
+  };
+});
+
 import servicesProxy from "pages/api/services/proxy";
 
 function createMockRes() {

@@ -1,7 +1,8 @@
 // middleware.js
+import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { getIronSession } from "iron-session";
+
 import { sessionOptions } from "lib/auth";
 
 export async function middleware(req) {
@@ -24,9 +25,7 @@ export async function middleware(req) {
   // Paths that require a logged‑in user. Adjust to your app’s structure.
   const protectedPrefixes = ["/protected-middleware", "/dashboard"];
 
-  const needsAuth = protectedPrefixes.some((p) =>
-    req.nextUrl.pathname.startsWith(p),
-  );
+  const needsAuth = protectedPrefixes.some((p) => req.nextUrl.pathname.startsWith(p));
 
   if (needsAuth) {
     // Load the session from the encrypted cookie

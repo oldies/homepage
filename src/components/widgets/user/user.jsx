@@ -1,8 +1,8 @@
 // src/components/widgets/user/user.jsx
 import { useTranslation } from "next-i18next";
 import { useCallback } from "react";
-import useSWR from "swr";
 import { MdLogin, MdPerson } from "react-icons/md";
+import useSWR from "swr";
 
 import Container from "../widget/container";
 import ContainerButton from "../widget/container_button";
@@ -59,11 +59,7 @@ export default function UserWidget({ options }) {
   // 2️⃣ Loading state (no data yet)
   if (!data) {
     return (
-      <ContainerButton
-        options={options}
-        callback={() => {}}
-        additionalClassNames="information-widget-user-loading"
-      >
+      <ContainerButton options={options} callback={() => {}} additionalClassNames="information-widget-user-loading">
         <PrimaryText>{t("user.loading") ?? "Loading…"}</PrimaryText>
         <SecondaryText>{t("common.wait") ?? "Please wait"}</SecondaryText>
         <WidgetIcon icon={MdPerson} size="m" pulse />
@@ -75,29 +71,18 @@ export default function UserWidget({ options }) {
   if (data.user) {
     const { name, avatarUrl } = data.user;
     return (
-      <Container
-        options={options}
-        additionalClassNames="information-widget-user"
-      >
+      <Container options={options} additionalClassNames="information-widget-user">
         <PrimaryText>{name}</PrimaryText>
-        {(avatarUrl && <Avatar url={avatarUrl} name={name} />) || (
-          <WidgetIcon icon={MdPerson} size="m" />
-        )}
+        {(avatarUrl && <Avatar url={avatarUrl} name={name} />) || <WidgetIcon icon={MdPerson} size="m" />}
       </Container>
     );
   }
 
   // 4️⃣ No user – show login button
   return (
-    <ContainerButton
-      options={options}
-      callback={handleLogin}
-      additionalClassNames="information-widget-user-login"
-    >
+    <ContainerButton options={options} callback={handleLogin} additionalClassNames="information-widget-user-login">
       <PrimaryText>{options.label ?? t("user.login") ?? "Login"}</PrimaryText>
-      <SecondaryText>
-        {options.subLabel ?? t("user.loginPrompt") ?? "Sign in to continue"}
-      </SecondaryText>
+      <SecondaryText>{options.subLabel ?? t("user.loginPrompt") ?? "Sign in to continue"}</SecondaryText>
       <WidgetIcon icon={MdLogin} size="m" pulse />
     </ContainerButton>
   );

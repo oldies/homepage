@@ -34,4 +34,3 @@ export default async function handler(req, res) {
   await session.save();
   return res.redirect(redirectTo.href);
 }
-
