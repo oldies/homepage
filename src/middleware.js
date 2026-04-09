@@ -5,16 +5,14 @@ import { getIronSession } from "iron-session";
 import { sessionOptions } from "lib/auth";
 
 export async function middleware(req) {
-  // ---- Host validation -------------------------------------------------
+  // Check the Host header, of HOMEPAGE_ALLOWED_HOSTS is set
   const host = req.headers.get("host");
   const port = process.env.PORT || 3000;
   let allowedHosts = [`localhost:${port}`, `127.0.0.1:${port}`];
   const allowAll = process.env.HOMEPAGE_ALLOWED_HOSTS === "*";
-
   if (process.env.HOMEPAGE_ALLOWED_HOSTS) {
     allowedHosts = allowedHosts.concat(process.env.HOMEPAGE_ALLOWED_HOSTS.split(","));
   }
-
   if (!allowAll && (!host || !allowedHosts.includes(host))) {
     // eslint-disable-next-line no-console
     console.error(

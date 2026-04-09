@@ -802,7 +802,6 @@ export async function getServiceItem(group, service) {
 
 export default async function getServiceWidget(group, service, index, userdata = false) {
   const serviceItem = await getServiceItem(group, service);
-
   if (serviceItem && (userdata == false || !serviceItem.visible || (serviceItem.visible && serviceItem.visible(userdata)))) {
     const { widget, widgets } = serviceItem;
     return index > -1 && widgets ? widgets[index] : widget;

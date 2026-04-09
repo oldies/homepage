@@ -215,7 +215,7 @@ export async function servicesResponse(userdata) {
   const definedLayouts = initialSettings.layout ? Object.keys(initialSettings.layout) : null;
   if (definedLayouts) {
     // this handles cases where groups are only defined in the settings.yaml layout and not in the services.yaml
-    const layoutGroups = Object.entries(initialSettings.layout).map(([key, value]) => 
+    const layoutGroups = Object.entries(initialSettings.layout).map(([key, value]) =>
       convertLayoutGroupToGroup(key, value),
     );
     mergeLayoutGroupsIntoConfigured(configuredServices, layoutGroups);
@@ -228,10 +228,7 @@ export async function servicesResponse(userdata) {
     const discoveredKubernetesGroup = findGroupByName(discoveredKubernetesServices, groupName) || {
       services: [],
     };
-    const configuredGroup = findGroupByName(configuredServices, groupName) || {
-      services: [],
-      groups: [],
-    };
+    const configuredGroup = findGroupByName(configuredServices, groupName) || { services: [], groups: [] };
 
     const mergedGroup = {
       name: groupName,

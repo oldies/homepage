@@ -1,5 +1,4 @@
 import { getSession } from "../../../lib/auth";
-
 import { servicesResponse } from "utils/config/api-response";
 
 export default async function handler(req, res) {
