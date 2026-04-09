@@ -66,6 +66,11 @@
         "wait": "Please wait",
         "empty_data": "Stato del sottosistema sconosciuto"
     },
+    "unifi_drive": {
+        "healthy": "Healthy",
+        "degraded": "Degraded",
+        "no_data": "No storage data available"
+    },
     "docker": {
         "rx": "RX",
         "tx": "TX",
@@ -106,6 +111,16 @@
         "series": "Serie",
         "episodes": "Episodi",
         "songs": "Canzoni"
+    },
+    "jellyfin": {
+        "playing": "Playing",
+        "transcoding": "Transcoding",
+        "bitrate": "Bitrate",
+        "no_active": "No Active Streams",
+        "movies": "Movies",
+        "series": "Serie",
+        "episodes": "Episodes",
+        "songs": "Songs"
     },
     "esphome": {
         "offline": "Offline",
@@ -168,11 +183,18 @@
         "passes": "Tessere"
     },
     "tautulli": {
-        "playing": "Playing",
+        "playing": "In riproduzione",
         "transcoding": "Transcoding",
         "bitrate": "Bitrate",
         "no_active": "No Active Streams",
         "plex_connection_error": "Controllare la connessione a Plex"
+    },
+    "tracearr": {
+        "no_active": "No Active Streams",
+        "streams": "Streams",
+        "transcodes": "Transcodes",
+        "directplay": "Direct Play",
+        "bitrate": "Bitrate"
     },
     "omada": {
         "connectedAp": "AP Connessi",
@@ -272,17 +294,13 @@
         "approved": "Approvati",
         "available": "Disponibili"
     },
-    "jellyseerr": {
+    "seerr": {
         "pending": "Pending",
         "approved": "Approved",
         "available": "Available",
+        "completed": "Completed",
+        "processing": "Processing",
         "issues": "Open Issues"
-    },
-    "overseerr": {
-        "pending": "Pending",
-        "processing": "In lavorazione",
-        "approved": "Approved",
-        "available": "Available"
     },
     "netalertx": {
         "total": "Total",
@@ -308,12 +326,12 @@
         "ping": "Ping"
     },
     "portainer": {
-        "running": "Running",
+        "running": "In esecuzione",
         "stopped": "Fermati",
         "total": "Total"
     },
     "suwayomi": {
-        "download": "Downloaded",
+        "download": "Scaricati",
         "nondownload": "Non Scaricato",
         "read": "Read",
         "unread": "Unread",
@@ -532,7 +550,8 @@
         "child_bridges_status": "{{ok}}/{{total}}",
         "up": "Up",
         "pending": "Pending",
-        "down": "Down"
+        "down": "Down",
+        "ok": "Ok"
     },
     "healthchecks": {
         "new": "Nuovo",
@@ -598,6 +617,15 @@
     "paperlessngx": {
         "inbox": "In arrivo",
         "total": "Total"
+    },
+    "pangolin": {
+        "orgs": "Orgs",
+        "sites": "Sites",
+        "resources": "Resources",
+        "targets": "Targets",
+        "traffic": "Traffic",
+        "in": "In",
+        "out": "Out"
     },
     "peanut": {
         "battery_charge": "Carica Batteria",
@@ -693,7 +721,11 @@
     "diskstation": {
         "days": "Days",
         "uptime": "Uptime",
-        "volumeAvailable": "Available"
+        "volumeAvailable": "Disponibili"
+    },
+    "dispatcharr": {
+        "channels": "Channels",
+        "streams": "Streams"
     },
     "mylar": {
         "series": "Series",
@@ -759,7 +791,8 @@
     "ghostfolio": {
         "gross_percent_today": "Today",
         "gross_percent_1y": "Un anno",
-        "gross_percent_max": "Sempre"
+        "gross_percent_max": "Sempre",
+        "net_worth": "Net Worth"
     },
     "audiobookshelf": {
         "podcasts": "Podcast",
@@ -781,6 +814,12 @@
         "authors": "Autori",
         "categories": "Categories",
         "series": "Series"
+    },
+    "booklore": {
+        "libraries": "Libraries",
+        "books": "Books",
+        "reading": "Reading",
+        "finished": "Finished"
     },
     "jdownloader": {
         "downloadCount": "Queue",
@@ -1053,9 +1092,9 @@
         "sharedFiles": "Files"
     },
     "jellystat": {
-        "songs": "Songs",
-        "movies": "Movies",
-        "episodes": "Episodes",
+        "songs": "Brani",
+        "movies": "Film",
+        "episodes": "Episodi",
         "other": "Altro"
     },
     "checkmk": {
@@ -1079,11 +1118,11 @@
         "total": "Total"
     },
     "wallos": {
-        "activeSubscriptions": "Subscriptions",
-        "thisMonthlyCost": "This Month",
-        "nextMonthlyCost": "Next Month",
+        "activeSubscriptions": "Abbonamenti",
+        "thisMonthlyCost": "Questo Mese",
+        "nextMonthlyCost": "Mese Prossimo",
         "previousMonthlyCost": "Prev. Month",
-        "nextRenewingSubscription": "Next Payment"
+        "nextRenewingSubscription": ""
     },
     "unraid": {
         "STARTED": "Started",
@@ -1119,5 +1158,32 @@
         "songs": "Songs",
         "time": "Time",
         "artists": "Artists"
+    },
+    "arcane": {
+        "containers": "Containers",
+        "images": "Images",
+        "image_updates": "Image Updates",
+        "images_unused": "Unused",
+        "environment_required": "Environment ID Required"
+    },
+    "dockhand": {
+        "running": "Running",
+        "stopped": "Stopped",
+        "cpu": "CPU",
+        "memory": "Memory",
+        "images": "Images",
+        "volumes": "Volumes",
+        "events_today": "Events Today",
+        "pending_updates": "Pending Updates",
+        "stacks": "Stacks",
+        "paused": "Paused",
+        "total": "Total",
+        "environment_not_found": "Environment Not Found"
+    },
+    "sparkyfitness": {
+        "eaten": "Eaten",
+        "burned": "Burned",
+        "remaining": "Remaining",
+        "steps": "Steps"
     }
 }

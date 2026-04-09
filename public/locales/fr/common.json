@@ -66,6 +66,11 @@
         "wait": "Veuillez patienter",
         "empty_data": "Statut du sous-système inconnu"
     },
+    "unifi_drive": {
+        "healthy": "Healthy",
+        "degraded": "Degraded",
+        "no_data": "No storage data available"
+    },
     "docker": {
         "rx": "Rx",
         "tx": "Tx",
@@ -107,6 +112,16 @@
         "episodes": "Épisodes",
         "songs": "Morceaux"
     },
+    "jellyfin": {
+        "playing": "En cours",
+        "transcoding": "En cours d'encodage",
+        "bitrate": "Bitrate",
+        "no_active": "No Active Streams",
+        "movies": "Movies",
+        "series": "Series",
+        "episodes": "Episodes",
+        "songs": "Songs"
+    },
     "esphome": {
         "offline": "Hors ligne",
         "offline_alt": "Hors ligne",
@@ -142,8 +157,8 @@
         "connectionStatusDisconnected": "Déconnecté",
         "connectionStatusConnected": "Connecté",
         "uptime": "Démarré depuis",
-        "maxDown": "Réception max.",
-        "maxUp": "Envoi max.",
+        "maxDown": "Réception max",
+        "maxUp": "Envoi max",
         "down": "Réception",
         "up": "Envoi",
         "received": "Reçu",
@@ -173,6 +188,13 @@
         "bitrate": "Débit",
         "no_active": "Aucune lecture en cours",
         "plex_connection_error": "Vérifier la connexion à Plex"
+    },
+    "tracearr": {
+        "no_active": "No Active Streams",
+        "streams": "Streams",
+        "transcodes": "Transcodes",
+        "directplay": "Direct Play",
+        "bitrate": "Bitrate"
     },
     "omada": {
         "connectedAp": "APs connectées",
@@ -229,7 +251,7 @@
         "seed": "En partage"
     },
     "develancacheui": {
-        "cachehitbytes": "Cache Hit (B)",
+        "cachehitbytes": "Octets acquis du cache",
         "cachemissbytes": "Cache Miss (B)"
     },
     "downloadstation": {
@@ -272,17 +294,13 @@
         "approved": "Approuvé",
         "available": "Disponible"
     },
-    "jellyseerr": {
-        "pending": "En attente",
-        "approved": "Approuvé",
-        "available": "Disponible",
-        "issues": "Problèmes non résolus"
-    },
-    "overseerr": {
-        "pending": "En attente",
-        "processing": "En cours de traitement",
-        "approved": "Approuvé",
-        "available": "Disponible"
+    "seerr": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "available": "Available",
+        "completed": "Completed",
+        "processing": "Processing",
+        "issues": "Open Issues"
     },
     "netalertx": {
         "total": "Total",
@@ -294,7 +312,7 @@
         "queries": "Requêtes",
         "blocked": "Bloqué",
         "blocked_percent": "% bloqué",
-        "gravity": "Listes dom. bloqués"
+        "gravity": "Listes dom. Bloqués"
     },
     "adguard": {
         "queries": "Requêtes",
@@ -532,7 +550,8 @@
         "child_bridges_status": "{{ok}}/{{total}}",
         "up": "En ligne",
         "pending": "En attente",
-        "down": "Hors ligne"
+        "down": "Hors ligne",
+        "ok": "Ok"
     },
     "healthchecks": {
         "new": "Nouveau",
@@ -598,6 +617,15 @@
     "paperlessngx": {
         "inbox": "Boîte de réception",
         "total": "Total"
+    },
+    "pangolin": {
+        "orgs": "Orgs",
+        "sites": "Sites",
+        "resources": "Ressources",
+        "targets": "Cibles",
+        "traffic": "Trafique",
+        "in": "In",
+        "out": "Out"
     },
     "peanut": {
         "battery_charge": "Charge de la batterie",
@@ -692,8 +720,12 @@
     },
     "diskstation": {
         "days": "Jours",
-        "uptime": "Disponibilité",
+        "uptime": "Démarré depuis",
         "volumeAvailable": "Disponible"
+    },
+    "dispatcharr": {
+        "channels": "Channels",
+        "streams": "Streams"
     },
     "mylar": {
         "series": "Séries",
@@ -719,7 +751,7 @@
     "grafana": {
         "dashboards": "Tableau de bord",
         "datasources": "Sources données",
-        "totalalerts": "Total alertes",
+        "totalalerts": "Alertes totales",
         "alertstriggered": "Alertes déclenchées"
     },
     "nextcloud": {
@@ -759,7 +791,8 @@
     "ghostfolio": {
         "gross_percent_today": "Aujourd'hui",
         "gross_percent_1y": "Un an",
-        "gross_percent_max": "Depuis le début"
+        "gross_percent_max": "Depuis le début",
+        "net_worth": "Patrimoine net"
     },
     "audiobookshelf": {
         "podcasts": "Podcasts",
@@ -781,6 +814,12 @@
         "authors": "Auteurs",
         "categories": "Catégories",
         "series": "Séries"
+    },
+    "booklore": {
+        "libraries": "Libraries",
+        "books": "Books",
+        "reading": "Reading",
+        "finished": "Finished"
     },
     "jdownloader": {
         "downloadCount": "File d'attente",
@@ -911,7 +950,7 @@
         "studios": "Studios",
         "movies": "Films",
         "tags": "Tags",
-        "oCount": "0 Compte"
+        "oCount": "O-mètre"
     },
     "tandoor": {
         "users": "Utilisateurs",
@@ -966,11 +1005,11 @@
     },
     "zabbix": {
         "unclassified": "Non classé",
-        "information": "Informations",
-        "warning": "Attention",
-        "average": "Moyenne",
-        "high": "Élevé",
-        "disaster": ""
+        "information": "Information",
+        "warning": "Avertissement",
+        "average": "Moyen",
+        "high": "Haut",
+        "disaster": "Désastre"
     },
     "lubelogger": {
         "vehicle": "Véhicule",
@@ -1091,7 +1130,7 @@
         "NEW_ARRAY": "Nouveau tableau",
         "RECON_DISK": "Reconstruction du disque",
         "DISABLE_DISK": "Disque désactivé",
-        "SWAP_DSBL": "Swap Disable",
+        "SWAP_DSBL": "Désactiver le swap",
         "INVALID_EXPANSION": "Extension invalide",
         "PARITY_NOT_BIGGEST": "La parité n'est pas la plus grande",
         "TOO_MANY_MISSING_DISKS": "Trop de disques manquants",
@@ -1119,5 +1158,32 @@
         "songs": "Musiques",
         "time": "Durée",
         "artists": "Artistes"
+    },
+    "arcane": {
+        "containers": "Containers",
+        "images": "Images",
+        "image_updates": "Image Updates",
+        "images_unused": "Unused",
+        "environment_required": "Environment ID Required"
+    },
+    "dockhand": {
+        "running": "Running",
+        "stopped": "Stopped",
+        "cpu": "CPU",
+        "memory": "Memory",
+        "images": "Images",
+        "volumes": "Volumes",
+        "events_today": "Events Today",
+        "pending_updates": "Pending Updates",
+        "stacks": "Stacks",
+        "paused": "Paused",
+        "total": "Total",
+        "environment_not_found": "Environment Not Found"
+    },
+    "sparkyfitness": {
+        "eaten": "Eaten",
+        "burned": "Burned",
+        "remaining": "Remaining",
+        "steps": "Steps"
     }
 }
