@@ -4,11 +4,7 @@ import path from "path";
 
 import yaml from "js-yaml";
 
-import checkAndCopyConfig, {
-  CONF_DIR,
-  getSettings,
-  substituteEnvironmentVars,
-} from "utils/config/config";
+import checkAndCopyConfig, { CONF_DIR, getSettings, substituteEnvironmentVars } from "utils/config/config";
 import {
   cleanServiceGroups,
   findGroupByName,
@@ -16,10 +12,7 @@ import {
   servicesFromDocker,
   servicesFromKubernetes,
 } from "utils/config/service-helpers";
-import {
-  cleanWidgetGroups,
-  widgetsFromConfig,
-} from "utils/config/widget-helpers";
+import { cleanWidgetGroups, widgetsFromConfig } from "utils/config/widget-helpers";
 
 /**
  * Compares services by weight then by name.
@@ -63,15 +56,11 @@ export async function bookmarksResponse() {
 
   const sortedGroups = [];
   const unsortedGroups = [];
-  const definedLayouts = initialSettings.layout
-    ? Object.keys(initialSettings.layout)
-    : null;
+  const definedLayouts = initialSettings.layout ? Object.keys(initialSettings.layout) : null;
 
   bookmarksArray.forEach((group) => {
     if (definedLayouts) {
-      const layoutIndex = definedLayouts.findIndex(
-        (layout) => layout === group.name,
-      );
+      const layoutIndex = definedLayouts.findIndex((layout) => layout === group.name);
       if (layoutIndex > -1) sortedGroups[layoutIndex] = group;
       else unsortedGroups.push(group);
     } else {
@@ -88,9 +77,7 @@ export async function widgetsResponse() {
   try {
     configuredWidgets = cleanWidgetGroups(await widgetsFromConfig());
   } catch (e) {
-    console.error(
-      "Failed to load widgets, please check widgets.yaml for errors or remove example entries.",
-    );
+    console.error("Failed to load widgets, please check widgets.yaml for errors or remove example entries.");
     if (e) console.error(e);
     configuredWidgets = [];
   }
@@ -121,21 +108,14 @@ function mergeSubgroups(configuredGroups, mergedGroup) {
   });
 }
 
-function ensureParentGroupExists(
-  sortedGroups,
-  configuredGroups,
-  group,
-  definedLayouts,
-) {
+function ensureParentGroupExists(sortedGroups, configuredGroups, group, definedLayouts) {
   // make sure the top level parent group exists in the sortedGroups array
   const parentGroupName = group.parent;
   const parentGroup = findGroupByName(configuredGroups, parentGroupName);
   if (parentGroup && parentGroup.parent) {
     ensureParentGroupExists(sortedGroups, configuredGroups, parentGroup);
   } else {
-    const parentGroupIndex = definedLayouts.findIndex(
-      (layout) => layout === parentGroupName,
-    );
+    const parentGroupIndex = definedLayouts.findIndex((layout) => layout === parentGroupName);
     if (parentGroupIndex > -1) {
       sortedGroups[parentGroupIndex] = parentGroup;
     }
@@ -191,30 +171,21 @@ export async function servicesResponse(userdata) {
       console.debug("No containers were found with homepage labels.");
     }
   } catch (e) {
-    console.error(
-      "Failed to discover services, please check docker.yaml for errors or remove example entries.",
-    );
+    console.error("Failed to discover services, please check docker.yaml for errors or remove example entries.");
     if (e) console.error(e.toString());
     discoveredDockerServices = [];
   }
 
   try {
-    discoveredKubernetesServices = cleanServiceGroups(
-      await servicesFromKubernetes(),
-    );
+    discoveredKubernetesServices = cleanServiceGroups(await servicesFromKubernetes());
   } catch (e) {
-    console.error(
-      "Failed to discover services, please check kubernetes.yaml for errors or remove example entries.",
-    );
+    console.error("Failed to discover services, please check kubernetes.yaml for errors or remove example entries.");
     if (e) console.error(e.toString());
     discoveredKubernetesServices = [];
   }
 
   try {
-    configuredServices = cleanServiceGroups(
-      await servicesFromConfig(),
-      JSON.parse(JSON.stringify(userdata)),
-    );
+    configuredServices = cleanServiceGroups(await servicesFromConfig(), JSON.parse(JSON.stringify(userdata)));
   } catch (e) {
     console.error("Failed to load services.yaml, please check for errors");
     if (e) console.error(e.toString());
@@ -241,28 +212,20 @@ export async function servicesResponse(userdata) {
 
   const sortedGroups = [];
   const unsortedGroups = [];
-  const definedLayouts = initialSettings.layout
-    ? Object.keys(initialSettings.layout)
-    : null;
+  const definedLayouts = initialSettings.layout ? Object.keys(initialSettings.layout) : null;
   if (definedLayouts) {
     // this handles cases where groups are only defined in the settings.yaml layout and not in the services.yaml
-    const layoutGroups = Object.entries(initialSettings.layout).map(
-      ([key, value]) => convertLayoutGroupToGroup(key, value),
+    const layoutGroups = Object.entries(initialSettings.layout).map(([key, value]) => 
+      convertLayoutGroupToGroup(key, value),
     );
     mergeLayoutGroupsIntoConfigured(configuredServices, layoutGroups);
   }
 
   mergedGroupsNames.forEach((groupName) => {
-    const discoveredDockerGroup = findGroupByName(
-      discoveredDockerServices,
-      groupName,
-    ) || {
+    const discoveredDockerGroup = findGroupByName(discoveredDockerServices, groupName) || {
       services: [],
     };
-    const discoveredKubernetesGroup = findGroupByName(
-      discoveredKubernetesServices,
-      groupName,
-    ) || {
+    const discoveredKubernetesGroup = findGroupByName(discoveredKubernetesServices, groupName) || {
       services: [],
     };
     const configuredGroup = findGroupByName(configuredServices, groupName) || {
@@ -272,31 +235,20 @@ export async function servicesResponse(userdata) {
 
     const mergedGroup = {
       name: groupName,
-      services: [
-        ...discoveredDockerGroup.services,
-        ...discoveredKubernetesGroup.services,
-        ...configuredGroup.services,
-      ]
+      services: [...discoveredDockerGroup.services, ...discoveredKubernetesGroup.services, ...configuredGroup.services]
         .filter((service) => service)
         .sort(compareServices),
       groups: [...configuredGroup.groups],
     };
 
     if (definedLayouts) {
-      const layoutIndex = definedLayouts.findIndex(
-        (layout) => layout === mergedGroup.name,
-      );
+      const layoutIndex = definedLayouts.findIndex((layout) => layout === mergedGroup.name);
       if (layoutIndex > -1) sortedGroups[layoutIndex] = mergedGroup;
       else if (configuredGroup.parent) {
         // this is a nested group, so find the parent group and merge the services
         mergeSubgroups(configuredServices, mergedGroup);
         // make sure the top level parent group exists in the sortedGroups array
-        ensureParentGroupExists(
-          sortedGroups,
-          configuredServices,
-          configuredGroup,
-          definedLayouts,
-        );
+        ensureParentGroupExists(sortedGroups, configuredServices, configuredGroup, definedLayouts);
       } else unsortedGroups.push(mergedGroup);
     } else if (configuredGroup.parent) {
       // this is a nested group, so find the parent group and merge the services

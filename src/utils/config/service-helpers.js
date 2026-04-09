@@ -4,13 +4,8 @@ import path from "path";
 import Docker from "dockerode";
 import yaml from "js-yaml";
 import jsep from "jsep";
-jsep.addBinaryOp("includes", 10);
 
-import checkAndCopyConfig, {
-  CONF_DIR,
-  getSettings,
-  substituteEnvironmentVars,
-} from "utils/config/config";
+import checkAndCopyConfig, { CONF_DIR, getSettings, substituteEnvironmentVars } from "utils/config/config";
 import getDockerArguments from "utils/config/docker";
 import { getKubeConfig } from "utils/config/kubernetes";
 import * as shvl from "utils/config/shvl";
@@ -22,6 +17,7 @@ const logger = createLogger("service-helpers");
 /* -------------------------------------------------
    Safe evaluator
    ------------------------------------------------- */
+jsep.addBinaryOp("includes", 10);
 function evaluate(node, claims) {
   switch (node.type) {
     case "BinaryExpression": {
@@ -106,15 +102,11 @@ function parseServicesToGroups(services) {
     serviceGroup[name].forEach((entries) => {
       const entryName = Object.keys(entries)[0];
       if (!entries[entryName]) {
-        logger.warn(
-          `Error parsing service "${entryName}" from config. Ensure required fields are present.`,
-        );
+        logger.warn(`Error parsing service "${entryName}" from config. Ensure required fields are present.`);
         return;
       }
       if (Array.isArray(entries[entryName])) {
-        groups = groups.concat(
-          parseServicesToGroups([{ [entryName]: entries[entryName] }]),
-        );
+        groups = groups.concat(parseServicesToGroups([{ [entryName]: entries[entryName] }]));
       } else {
         let visible_filter = {};
         if (entries[entryName]["filter"]) {
@@ -128,8 +120,7 @@ function parseServicesToGroups(services) {
           name: entryName,
           ...visible_filter,
           ...entries[entryName],
-          weight:
-            entries[entryName].weight || serviceGroupServices.length * 100, // default weight
+          weight: entries[entryName].weight || serviceGroupServices.length * 100, // default weight
           type: "service",
         });
       }
@@ -327,8 +318,7 @@ export function cleanServiceGroups(groups, userdata) {
         return null;
       }
       const cleanedService = { ...service };
-      if (cleanedService.showStats !== undefined)
-        cleanedService.showStats = JSON.parse(cleanedService.showStats);
+      if (cleanedService.showStats !== undefined) cleanedService.showStats = JSON.parse(cleanedService.showStats);
       if (typeof service.weight === "string") {
         const weight = parseInt(service.weight, 10);
         if (Number.isNaN(weight)) {
@@ -810,20 +800,10 @@ export async function getServiceItem(group, service) {
   return false;
 }
 
-export default async function getServiceWidget(
-  group,
-  service,
-  index,
-  userdata = false,
-) {
+export default async function getServiceWidget(group, service, index, userdata = false) {
   const serviceItem = await getServiceItem(group, service);
 
-  if (
-    serviceItem &&
-    (userdata == false ||
-      !serviceItem.visible ||
-      (serviceItem.visible && serviceItem.visible(userdata)))
-  ) {
+  if (serviceItem && (userdata == false || !serviceItem.visible || (serviceItem.visible && serviceItem.visible(userdata)))) {
     const { widget, widgets } = serviceItem;
     return index > -1 && widgets ? widgets[index] : widget;
   }

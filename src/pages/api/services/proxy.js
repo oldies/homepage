@@ -1,12 +1,10 @@
 import { getSession } from "../../../lib/auth";
-
 import getServiceWidget from "utils/config/service-helpers";
 import createLogger from "utils/logger";
 import { formatApiCall } from "utils/proxy/api-helpers";
 import genericProxyHandler from "utils/proxy/handlers/generic";
 import calendarProxyHandler from "widgets/calendar/proxy";
 import widgets from "widgets/widgets";
-
 
 const logger = createLogger("servicesProxy");
 
@@ -18,18 +16,12 @@ export default async function handler(req, res) {
 
   try {
     const { service, group, index } = req.query;
-    const serviceWidget = await getServiceWidget(
-      group,
-      service,
-      index,
-      userinfo,
-    );
+    const serviceWidget = await getServiceWidget(group, service, index, userinfo);
     let type = serviceWidget?.type;
 
     // exceptions
     if (type === "calendar") type = "ical";
-    else if (service === "unifi_console" && group === "unifi_console")
-      type = "unifi_console";
+    else if (service === "unifi_console" && group === "unifi_console") type = "unifi_console";
 
     const widget = widgets[type];
 

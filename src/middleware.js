@@ -2,12 +2,8 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { getIronSession } from "iron-session";
-
 import { sessionOptions } from "lib/auth";
 
-/* -------------------------------------------------
-   1️⃣  Host‑validation (your existing code)
-   ------------------------------------------------- */
 export async function middleware(req) {
   // ---- Host validation -------------------------------------------------
   const host = req.headers.get("host");
@@ -16,9 +12,7 @@ export async function middleware(req) {
   const allowAll = process.env.HOMEPAGE_ALLOWED_HOSTS === "*";
 
   if (process.env.HOMEPAGE_ALLOWED_HOSTS) {
-    allowedHosts = allowedHosts.concat(
-      process.env.HOMEPAGE_ALLOWED_HOSTS.split(","),
-    );
+    allowedHosts = allowedHosts.concat(process.env.HOMEPAGE_ALLOWED_HOSTS.split(","));
   }
 
   if (!allowAll && (!host || !allowedHosts.includes(host))) {
@@ -26,10 +20,7 @@ export async function middleware(req) {
     console.error(
       `Host validation failed for: ${host}. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.`,
     );
-    return NextResponse.json(
-      { error: "Host validation failed. See logs for more details." },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: "Host validation failed. See logs for more details." }, { status: 400 });
   }
 
   // ---- Iron‑session auth check -----------------------------------------
@@ -65,14 +56,6 @@ export async function middleware(req) {
   return NextResponse.next();
 }
 
-/* -------------------------------------------------
-   2️⃣  Matcher – run for API routes *and* any
-       protected‑middleware paths you defined above
-   ------------------------------------------------- */
 export const config = {
-  matcher: [
-    "/api/:path*", // existing API routes
-    "/protected-middleware/:path*", // example protected route
-    "/dashboard/:path*", // add more as needed
-  ],
+  matcher: "/api/:path*",
 };
