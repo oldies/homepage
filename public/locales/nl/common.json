@@ -66,6 +66,11 @@
         "wait": "Even geduld",
         "empty_data": "Subsysteem status onbekend"
     },
+    "unifi_drive": {
+        "healthy": "Healthy",
+        "degraded": "Degraded",
+        "no_data": "No storage data available"
+    },
     "docker": {
         "rx": "RX",
         "tx": "TX",
@@ -106,6 +111,16 @@
         "series": "Series",
         "episodes": "Afleveringen",
         "songs": "Nummers"
+    },
+    "jellyfin": {
+        "playing": "Playing",
+        "transcoding": "Transcoding",
+        "bitrate": "Bitrate",
+        "no_active": "No Active Streams",
+        "movies": "Movies",
+        "series": "Series",
+        "episodes": "Episodes",
+        "songs": "Songs"
     },
     "esphome": {
         "offline": "Offline",
@@ -173,6 +188,13 @@
         "bitrate": "Bitrate",
         "no_active": "Geen Actieve Streams",
         "plex_connection_error": "Controleer Plex Connectie"
+    },
+    "tracearr": {
+        "no_active": "No Active Streams",
+        "streams": "Streams",
+        "transcodes": "Transcodes",
+        "directplay": "Direct Play",
+        "bitrate": "Bitrate"
     },
     "omada": {
         "connectedAp": "Verbonden APs",
@@ -272,17 +294,13 @@
         "approved": "Goedgekeurd",
         "available": "Beschikbaar"
     },
-    "jellyseerr": {
-        "pending": "In afwachting",
-        "approved": "Goedgekeurd",
-        "available": "Beschikbaar",
+    "seerr": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "available": "Available",
+        "completed": "Completed",
+        "processing": "Processing",
         "issues": "Open Issues"
-    },
-    "overseerr": {
-        "pending": "In afwachting",
-        "processing": "Verwerken",
-        "approved": "Goedgekeurd",
-        "available": "Beschikbaar"
     },
     "netalertx": {
         "total": "Totaal",
@@ -532,7 +550,8 @@
         "child_bridges_status": "{{ok}}/{{total}}",
         "up": "Online",
         "pending": "In afwachting",
-        "down": "Offline"
+        "down": "Offline",
+        "ok": "Ok"
     },
     "healthchecks": {
         "new": "Nieuw",
@@ -598,6 +617,15 @@
     "paperlessngx": {
         "inbox": "Postvak In",
         "total": "Totaal"
+    },
+    "pangolin": {
+        "orgs": "Orgs",
+        "sites": "Sites",
+        "resources": "Resources",
+        "targets": "Targets",
+        "traffic": "Traffic",
+        "in": "In",
+        "out": "Out"
     },
     "peanut": {
         "battery_charge": "Batterij opladen",
@@ -695,6 +723,10 @@
         "uptime": "Uptime",
         "volumeAvailable": "Beschikbaar"
     },
+    "dispatcharr": {
+        "channels": "Channels",
+        "streams": "Streams"
+    },
     "mylar": {
         "series": "Series",
         "issues": "Problemen",
@@ -759,7 +791,8 @@
     "ghostfolio": {
         "gross_percent_today": "Vandaag",
         "gross_percent_1y": "Een jaar",
-        "gross_percent_max": "Altijd"
+        "gross_percent_max": "Altijd",
+        "net_worth": "Net Worth"
     },
     "audiobookshelf": {
         "podcasts": "Podcasts",
@@ -781,6 +814,12 @@
         "authors": "Auteurs",
         "categories": "Categorieën",
         "series": "Series"
+    },
+    "booklore": {
+        "libraries": "Libraries",
+        "books": "Books",
+        "reading": "Reading",
+        "finished": "Finished"
     },
     "jdownloader": {
         "downloadCount": "Wachtrij",
@@ -1119,5 +1158,32 @@
         "songs": "Nummers",
         "time": "Tijd",
         "artists": "Artiesten"
+    },
+    "arcane": {
+        "containers": "Containers",
+        "images": "Images",
+        "image_updates": "Image Updates",
+        "images_unused": "Unused",
+        "environment_required": "Environment ID Required"
+    },
+    "dockhand": {
+        "running": "Running",
+        "stopped": "Stopped",
+        "cpu": "CPU",
+        "memory": "Memory",
+        "images": "Images",
+        "volumes": "Volumes",
+        "events_today": "Events Today",
+        "pending_updates": "Pending Updates",
+        "stacks": "Stacks",
+        "paused": "Paused",
+        "total": "Total",
+        "environment_not_found": "Environment Not Found"
+    },
+    "sparkyfitness": {
+        "eaten": "Eaten",
+        "burned": "Burned",
+        "remaining": "Remaining",
+        "steps": "Steps"
     }
 }

@@ -66,6 +66,11 @@
         "wait": "Wag asseblief",
         "empty_data": "Substelsel status onbekend"
     },
+    "unifi_drive": {
+        "healthy": "Healthy",
+        "degraded": "Degraded",
+        "no_data": "No storage data available"
+    },
     "docker": {
         "rx": "RX",
         "tx": "TX",
@@ -105,6 +110,16 @@
         "movies": "Flieks",
         "series": "Reekse",
         "episodes": "Episodes",
+        "songs": "Liedjies"
+    },
+    "jellyfin": {
+        "playing": "Speel",
+        "transcoding": "Transkodering",
+        "bitrate": "Bistempo",
+        "no_active": "Geen Aktiewe Strome",
+        "movies": "Movies",
+        "series": "Reekse",
+        "episodes": "Episode",
         "songs": "Liedjies"
     },
     "esphome": {
@@ -173,6 +188,13 @@
         "bitrate": "Bistempo",
         "no_active": "Geen aktiewe strome nie",
         "plex_connection_error": "Gaan Plex-verbinding Na"
+    },
+    "tracearr": {
+        "no_active": "Geen Aktiewe Strome",
+        "streams": "Uitsendings",
+        "transcodes": "Transkodering",
+        "directplay": "Direkte Speel",
+        "bitrate": "Bistempo"
     },
     "omada": {
         "connectedAp": "Gekoppelde APs",
@@ -272,17 +294,13 @@
         "approved": "Goedgekeur",
         "available": "Beskikbaar"
     },
-    "jellyseerr": {
+    "seerr": {
         "pending": "Afwagtend",
         "approved": "Goedgekeur",
         "available": "Beskikbaar",
-        "issues": "Oop Kwessies"
-    },
-    "overseerr": {
-        "pending": "Afwagtend",
+        "completed": "Afgehandel",
         "processing": "Verwerking",
-        "approved": "Goedgekeur",
-        "available": "Beskikbaar"
+        "issues": "Oop Kwessies"
     },
     "netalertx": {
         "total": "Totaal",
@@ -532,7 +550,8 @@
         "child_bridges_status": "{{ok}}/{{total}}",
         "up": "Op",
         "pending": "Afwagtend",
-        "down": "Af"
+        "down": "Af",
+        "ok": "Ok"
     },
     "healthchecks": {
         "new": "Nuut",
@@ -598,6 +617,15 @@
     "paperlessngx": {
         "inbox": "Inmandjie",
         "total": "Totaal"
+    },
+    "pangolin": {
+        "orgs": "Orgs",
+        "sites": "Sites",
+        "resources": "Bronne",
+        "targets": "Teikens",
+        "traffic": "Verkeer",
+        "in": "In",
+        "out": "Uit"
     },
     "peanut": {
         "battery_charge": "Batterylading",
@@ -695,6 +723,10 @@
         "uptime": "Optyd",
         "volumeAvailable": "Beskikbaar"
     },
+    "dispatcharr": {
+        "channels": "Kanale",
+        "streams": "Uitsendings"
+    },
     "mylar": {
         "series": "Reekse",
         "issues": "Kwessies",
@@ -759,7 +791,8 @@
     "ghostfolio": {
         "gross_percent_today": "Vandag",
         "gross_percent_1y": "Een jaar",
-        "gross_percent_max": "Alle tyd"
+        "gross_percent_max": "Alle tyd",
+        "net_worth": "Netto Waarde"
     },
     "audiobookshelf": {
         "podcasts": "Podsendinge",
@@ -781,6 +814,12 @@
         "authors": "Skrywers",
         "categories": "Kategorieë",
         "series": "Reekse"
+    },
+    "booklore": {
+        "libraries": "Biblioteke",
+        "books": "Boeke",
+        "reading": "Lees",
+        "finished": "Klaar"
     },
     "jdownloader": {
         "downloadCount": "Tou",
@@ -1119,5 +1158,32 @@
         "songs": "Liedjies",
         "time": "Tyd",
         "artists": "Kunstenaars"
+    },
+    "arcane": {
+        "containers": "Houers",
+        "images": "Beelde",
+        "image_updates": "Beeldopdaterings",
+        "images_unused": "Ongebruik",
+        "environment_required": "Omgewings-ID Vereis"
+    },
+    "dockhand": {
+        "running": "Lopend",
+        "stopped": "Gestop",
+        "cpu": "SVE",
+        "memory": "Geheue",
+        "images": "Beelde",
+        "volumes": "Volumes",
+        "events_today": "Vandag se byeenkomste",
+        "pending_updates": "Hangende opdaterings",
+        "stacks": "Stapels",
+        "paused": "Onderbreek",
+        "total": "Totaal",
+        "environment_not_found": "Omgewing Nie Gevind Nie"
+    },
+    "sparkyfitness": {
+        "eaten": "Geëet",
+        "burned": "Verbrand",
+        "remaining": "Oorblywende",
+        "steps": "Stappe"
     }
 }
