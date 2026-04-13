@@ -294,11 +294,20 @@ export async function servicesFromKubernetes() {
         groups.push(serverGroup);
       }
 
+      let visible_filter = {};
+      if (serverService["filter"]) {
+        visible_filter = {
+          visible: compileFilter(serverService["filter"]),
+        };
+        delete serverService["filter"];
+      }
+
       const { name: serviceName, group: _, ...pushedService } = serverService;
 
       serverGroup.services.push({
         name: serviceName,
         ...pushedService,
+        ...visible_filter,
       });
 
       return groups;

@@ -40,6 +40,7 @@ export default async function handler(req, res) {
     email: userinfo.email | "",
     email_verified: userinfo.email_verified || false,
     groups: userinfo.groups || [],
+    roles: userinfo.roles || [],
   };
 
   await session.save();

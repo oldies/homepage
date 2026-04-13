@@ -96,6 +96,7 @@ export async function constructedServiceFromResource(resource) {
     weight: resource.metadata.annotations[`${ANNOTATION_BASE}/weight`] || "0",
     icon: resource.metadata.annotations[`${ANNOTATION_BASE}/icon`] || "",
     description: resource.metadata.annotations[`${ANNOTATION_BASE}/description`] || "",
+    filter: resource.metadata.annotations[`${ANNOTATION_BASE}/filter`] || undefined,
     external: false,
     type: "service",
   };
